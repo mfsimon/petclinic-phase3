@@ -8,11 +8,13 @@ We're going to use an in memory database to start with (H2), then switch to MySQ
 
 #### What You Are Given
 
-* Code for the `OwnerController` and `PetController`
-* Code for the `OwnerService` and `PetService`
-* Code for the `OwnerRepository` and `PetRepository`
-* Models for `Owner`, `Pet` and `PetType`
-* Modified driver class that works with the new models.
+* Code for the controllers - `BasicController`, `OwnerController`,`PetController`, `VisitController`, `VetController`
+* Code for the services - `BasicService`, `OwnerService`, `PetService`, `VisitService`, `VetService`
+* Code for the repositories - `OwnerRepository`, `PetRepository`, `VisitRepository`, `VetRepository`
+* Code for the models - `Owner`, `Pet`, `PetType`, `Visit`, `Vet` and `Speciality`
+* A database class - `FakeDatabase`
+* Supporting interfaces for the `FakeDatabase` (`Modifiable` and `CrudRepository`)
+* A driver class - `PetClinicDriver`
 
 #### What You Need To Complete
 Complete the following steps to add a real database.  
@@ -43,11 +45,12 @@ The repositories need to be modified as well:
 
 * Remove ALL the methods from each of your repositories.  You'll only have the class headers remaining.
 * Change the classes to interfaces.
-* Have each repository extend CrudRepository.
-* Be sure to set the proper generic type for the CrudRepository.
-* CrudRepository<Owner, Long> is an example.  Owner is the class you'll be accessing in the database and Long is the type of the id field.
+* Remove the now unused `extends` from the method header.
+* Have each repository extend the `CrudRepository` from the JPA library.
+* Be sure to set the proper generic type for the `CrudRepository`.
+* `CrudRepository<Owner, Long>` is an example.  `Owner` is the class you'll be accessing in the database and `Long` is the type of the id field.
 
-The applications.properties file has been updated:
+The `applications.properties` file has been updated:
 
 * Check the settings in the properties file.  There are several JPA and Hibernate settings added.  Google them to see what they do.
 
@@ -78,7 +81,7 @@ The applications.properties file has been updated:
 * Generate a builder by navigating to the class you want to add the builder to and navigate to Code -> Generate.
 * Select Builder.
 * Select `Inner Builder` and `Single Field` then select OK.
-* Add a public static method called builder() just above the new inner class.  The return type for the Owner class would be OwnerBuilder.
+* Add a public static method called `builder()` just above the new inner class.  For the `Owner` class, the return type for the new method would be `OwnerBuilder`.
 * Use the new builder in your driver to create some new objects.
 
 ###### Bonus Activity 2 (easy) 
