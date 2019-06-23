@@ -35,4 +35,6 @@ The following guides illustrate how to use some features and patterns applied in
 * [Mapping JPA One to One Relationships](https://www.baeldung.com/jpa-one-to-one)
 * [Mapping JPA One to Many Relationships](https://www.baeldung.com/hibernate-one-to-many)
 * [Mapping JPA Many to Many Relationships](https://www.baeldung.com/jpa-many-to-many)
+* [Persisting Enumerated Types in JPA](https://www.baeldung.com/jpa-persisting-enums-in-jpa)
+* [Persisting Collection of Enumerated Types in JPA](https://stackoverflow.com/questions/416208/jpa-map-collection-of-enums)
 
