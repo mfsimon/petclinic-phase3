@@ -28,14 +28,6 @@ Complete the following steps to add a real database.
 * Modify your repositories - change the classes to interfaces and have them extend CrudRepository.  Be sure to set the proper generic type for the CrudRepository.  Use the existing repositories as a guide.
 * Copy the properties from this application.properties file to yours.  There are several JPA and Hibernate settings in them.
 
-###### Patterns Used
-
-* MVC
-* 3-Tier application
-* Polymorphism (inheritance)
-* Designing to interfaces
-* Spring Data JPA
-
 ###### Frameworks Used
 * Spring
 * Spring Boot
@@ -75,9 +67,8 @@ Complete the following steps to add a real database.
 * In the build file (pom.xml), uncomment the dependency for the driver library (mysql-connector-java).
 
 ###### Bonus Activity 2 (hard)
-* Implement integration tests for the `PetController`, `VisitController` and `VetController` classes.
-* You'll have to have complete code for the visit and vet sequences.
-* Use the code in `OwnerControllerIntegrationTests` as a template.
+* This assumes you have either the H2 or MySQL database working.
+* Implement integration tests for the `OwnerController`, `PetController`, `VisitController` and `VetController` classes.
 
 #### Notes
 * Dependencies have already been added for you in the pom.xml file for this phase.  You shouldn't have to modify or add anything to your build file (pom.xml), but feel free to as needed.

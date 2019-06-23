@@ -1,6 +1,5 @@
 package com.example.petclinic.model;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -8,45 +7,37 @@ import java.util.Objects;
 /**
  * This class represents a pet owner.
  */
-@Entity(name = "Owner")
-@Table(name = "owner")
-public class Owner {
+public class Owner implements Modifiable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
+    private int id;
     private String name;
     private String address;
     private String city;
     private String phoneNumber;
 
-    @OneToMany(
-            mappedBy = "owner",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY
-    )
-    private List<Pet> pets = new ArrayList<>();
+    // associations
+    private List<Pet> pets;
 
-    protected Owner() {
 
+    public Owner(int id) {
+        this.id = id;
     }
 
-    public Owner(String name, String address, String city, String phoneNumber) {
-
+    public Owner(int id, String name, String address, String city, String phoneNumber) {
+        this.id = id;
         this.name = name;
         this.address = address;
         this.city = city;
         this.phoneNumber = phoneNumber;
-
+        this.pets = new ArrayList<>();
     }
 
-    public Long getId() {
+    @Override
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -82,22 +73,21 @@ public class Owner {
         this.phoneNumber = phoneNumber;
     }
 
-    // This is needed to update the relationship between Pet and Owner when adding a Pet
+    public Pet getPet(Pet pet) {
+        return this.pets.get(pets.indexOf(pet));
+    }
+
     public void addPet(Pet pet) {
-        pets.add(pet);
-        pet.setOwner(this);
+        this.pets.add(pet);
     }
 
-    // This is needed to update the relationship between Pet and Owner when removing a Pet
-    public void removePet(Pet pet) {
-        pets.remove(pet);
-        pet.setOwner(null);
-    }
-
-    public List<Pet> getPets() {
+    public List<Pet> getAllPets() {
         return this.pets;
     }
 
+    /*
+    Only include id when generating equals and hashcode
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -113,58 +103,14 @@ public class Owner {
 
     @Override
     public String toString() {
-
-        final StringBuilder sb = new StringBuilder("Owner {");
+        final StringBuilder sb = new StringBuilder("Owner{");
         sb.append("id=").append(id);
         sb.append(", name='").append(name).append('\'');
         sb.append(", address='").append(address).append('\'');
         sb.append(", city='").append(city).append('\'');
         sb.append(", phoneNumber='").append(phoneNumber).append('\'');
+        sb.append(", pets=").append(pets);
         sb.append('}');
-
         return sb.toString();
-    }
-
-    // Builder pattern using static builder
-    public static OwnerBuilder builder() {
-        return new OwnerBuilder();
-    }
-
-    public static final class OwnerBuilder {
-
-        private Owner owner;
-
-        private OwnerBuilder() {
-            owner = new Owner();
-        }
-
-        public OwnerBuilder withId(Long id) {
-            owner.setId(id);
-            return this;
-        }
-
-        public OwnerBuilder withName(String name) {
-            owner.setName(name);
-            return this;
-        }
-
-        public OwnerBuilder withAddress(String address) {
-            owner.setAddress(address);
-            return this;
-        }
-
-        public OwnerBuilder withCity(String city) {
-            owner.setCity(city);
-            return this;
-        }
-
-        public OwnerBuilder withPhoneNumber(String phoneNumber) {
-            owner.setPhoneNumber(phoneNumber);
-            return this;
-        }
-
-        public Owner build() {
-            return owner;
-        }
     }
 }

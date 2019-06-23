@@ -1,41 +1,38 @@
 package com.example.petclinic.model;
 
-import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
-@Entity(name = "Pet")
-@Table(name = "pet")
-public class Pet {
+public class Pet implements Modifiable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private int id;
     private String name;
     private Date birthDate;
     private PetType petType;
 
-    // Lazy fetch is better for performance than eager
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id")
+    // associations
     private Owner owner;
+    private List<Visit> visits;
 
-    protected Pet() {
-
+    public Pet(int id) {
+        this.id = id;
     }
 
-    public Pet(String name, Date birthDate, PetType petType) {
+    public Pet(int id, String name, Date birthDate, PetType petType) {
 
+        this.id = id;
         this.name = name;
         this.birthDate = birthDate;
         this.petType = petType;
     }
 
-    public Long getId() {
+    @Override
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -71,6 +68,18 @@ public class Pet {
         this.owner = owner;
     }
 
+    public Visit getVisit(Visit visit) {
+        return visits.get(visits.indexOf(visit));
+    }
+
+    public void addVisit(Visit visit) {
+        visits.add(visit);
+    }
+
+    public List<Visit> getAllVisits() {
+        return this.visits;
+    }
+
     // only include id field when generating equals and hashcode
     @Override
     public boolean equals(Object o) {
@@ -87,58 +96,14 @@ public class Pet {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Pet {");
+        final StringBuilder sb = new StringBuilder("Pet{");
         sb.append("id=").append(id);
         sb.append(", name='").append(name).append('\'');
         sb.append(", birthDate=").append(birthDate);
         sb.append(", petType=").append(petType);
+        sb.append(", owner=").append(owner);
+        sb.append(", visits=").append(visits);
         sb.append('}');
         return sb.toString();
-    }
-
-    public static PetBuilder builder() {
-        return new PetBuilder();
-    }
-
-
-    public static final class PetBuilder {
-        private Pet pet;
-
-        private PetBuilder() {
-            pet = new Pet();
-        }
-
-        public static PetBuilder aPet() {
-            return new PetBuilder();
-        }
-
-        public PetBuilder withId(Long id) {
-            pet.setId(id);
-            return this;
-        }
-
-        public PetBuilder withName(String name) {
-            pet.setName(name);
-            return this;
-        }
-
-        public PetBuilder withBirthDate(Date birthDate) {
-            pet.setBirthDate(birthDate);
-            return this;
-        }
-
-        public PetBuilder withPetType(PetType petType) {
-            pet.setPetType(petType);
-            return this;
-        }
-
-        public PetBuilder withOwner(Owner owner) {
-            pet.setOwner(owner);
-            return this;
-        }
-
-        public Pet build() {
-            return pet;
-        }
     }
 }

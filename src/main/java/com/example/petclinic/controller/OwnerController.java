@@ -6,49 +6,44 @@ import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
-/**
- * Owner Controller
- */
 @Controller
-public class OwnerController {
+public class OwnerController implements BasicController<Owner> {
 
     private OwnerService ownerService;
 
     public OwnerController(OwnerService ownerService) {
+
         this.ownerService = ownerService;
     }
 
-    public Owner saveOwner(Owner owner) {
+    @Override
+    public Owner add(Owner owner) {
 
-        Owner result = this.ownerService.saveOwner(owner);
-        return result;
+        return this.ownerService.add(owner);
     }
 
-    public Owner getOwner(Long id) {
+    @Override
+    public Owner get(int id) {
 
-        Owner result = this.ownerService.getOwner(id);
-        return result;
+        return this.ownerService.get(id);
     }
 
-    public Owner modifyOwner(Owner owner) {
+    @Override
+    public Owner modify(Owner owner) {
 
-        Owner result = this.ownerService.modifyOwner(owner);
-        return result;
+        return this.ownerService.modify(owner);
     }
 
-    public boolean deleteOwner(Owner owner) {
+    @Override
+    public boolean delete(Owner owner) {
 
-        boolean result = this.ownerService.deleteOwner(owner);
-        return result;
+        return this.ownerService.delete(owner);
     }
 
+    @Override
+    public List<Owner> getAll() {
 
-    public List<Owner> getAllOwners() {
-
-        List<Owner> result = this.ownerService.getAll();
-        return result;
-
+        return this.ownerService.getAll();
     }
-
 
 }
