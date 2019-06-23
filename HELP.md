@@ -32,5 +32,7 @@ The following guides illustrate how to use some features and patterns applied in
 * [Aggregation vs Composition](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/uml-aggregation-vs-composition/)
 * [JPA SQL Logging](https://www.baeldung.com/sql-logging-spring-boot)
 * [Spring Boot Testing Features](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html)
-
+* [Mapping JPA One to One Relationships](https://www.baeldung.com/jpa-one-to-one)
+* [Mapping JPA One to Many Relationships](https://www.baeldung.com/hibernate-one-to-many)
+* [Mapping JPA Many to Many Relationships](https://www.baeldung.com/jpa-many-to-many)
 
