@@ -16,7 +16,6 @@ public class Owner {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-
     private String name;
     private String address;
     private String city;
@@ -42,7 +41,6 @@ public class Owner {
         this.phoneNumber = phoneNumber;
 
     }
-
 
     public Long getId() {
         return id;
@@ -138,10 +136,6 @@ public class Owner {
 
         private OwnerBuilder() {
             owner = new Owner();
-        }
-
-        public static OwnerBuilder anOwner() {
-            return new OwnerBuilder();
         }
 
         public OwnerBuilder withId(Long id) {

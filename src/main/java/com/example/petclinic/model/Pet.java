@@ -100,15 +100,12 @@ public class Pet {
         return new PetBuilder();
     }
 
-    public static final class PetBuilder {
 
-        private Long id;
-        private String name;
-        private Date birthDate;
-        private PetType petType;
-        private Owner owner;
+    public static final class PetBuilder {
+        private Pet pet;
 
         private PetBuilder() {
+            pet = new Pet();
         }
 
         public static PetBuilder aPet() {
@@ -116,37 +113,31 @@ public class Pet {
         }
 
         public PetBuilder withId(Long id) {
-            this.id = id;
+            pet.setId(id);
             return this;
         }
 
         public PetBuilder withName(String name) {
-            this.name = name;
+            pet.setName(name);
             return this;
         }
 
         public PetBuilder withBirthDate(Date birthDate) {
-            this.birthDate = birthDate;
+            pet.setBirthDate(birthDate);
             return this;
         }
 
         public PetBuilder withPetType(PetType petType) {
-            this.petType = petType;
+            pet.setPetType(petType);
             return this;
         }
 
         public PetBuilder withOwner(Owner owner) {
-            this.owner = owner;
+            pet.setOwner(owner);
             return this;
         }
 
         public Pet build() {
-            Pet pet = new Pet();
-            pet.setId(id);
-            pet.setName(name);
-            pet.setBirthDate(birthDate);
-            pet.setPetType(petType);
-            pet.setOwner(owner);
             return pet;
         }
     }
