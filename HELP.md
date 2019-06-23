@@ -38,4 +38,5 @@ The following guides illustrate how to use some features and patterns applied in
 * [Mapping JPA Many to Many Relationships](https://www.baeldung.com/jpa-many-to-many)
 * [Persisting Enumerated Types in JPA](https://www.baeldung.com/jpa-persisting-enums-in-jpa)
 * [Persisting Collection of Enumerated Types in JPA](https://stackoverflow.com/questions/416208/jpa-map-collection-of-enums)
+* [Bet Way To Use Many To Many Annotation](https://vladmihalcea.com/the-best-way-to-use-the-manytomany-annotation-with-jpa-and-hibernate/)
 
