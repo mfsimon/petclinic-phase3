@@ -5,6 +5,7 @@ import com.example.petclinic.controller.PetController;
 import com.example.petclinic.controller.VetController;
 import com.example.petclinic.controller.VisitController;
 import com.example.petclinic.model.*;
+import org.springframework.boot.ExitCodeGenerator;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -17,7 +18,7 @@ import java.util.List;
 Entry Point
  */
 @SpringBootApplication
-public class PetClinicDriver {
+public class PetClinicDriver implements ExitCodeGenerator {
 
     private static ConfigurableApplicationContext context;
 
@@ -33,6 +34,8 @@ public class PetClinicDriver {
 
         testApp();
 
+        // part of exit code implementation
+        System.exit(SpringApplication.exit(context));
     }
 
     private static void testApp() {
@@ -130,5 +133,10 @@ public class PetClinicDriver {
         }
 
         System.out.println();
+    }
+
+    @Override
+    public int getExitCode() {
+        return 42;
     }
 }
