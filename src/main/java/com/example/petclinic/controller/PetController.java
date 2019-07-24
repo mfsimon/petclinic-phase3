@@ -23,7 +23,7 @@ public class PetController implements BasicController<Pet> {
     }
 
     @Override
-    public Pet get(int id) {
+    public Pet get(Long id) {
 
         return this.petService.get(id);
     }

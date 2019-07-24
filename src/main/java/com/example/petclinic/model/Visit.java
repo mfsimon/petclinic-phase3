@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Visit implements Modifiable {
 
-    private int id;
+    private Long id;
     private Date dateOfVisit;
     private String description;
 
@@ -18,23 +18,23 @@ public class Visit implements Modifiable {
 
     }
 
-    public Visit(int id) {
+    public Visit(Long id) {
         this.id = id;
     }
 
-    public Visit(int id, Date dateOfVisit, String description, Pet pet) {
+    public Visit(Long id, Date dateOfVisit, String description) {
+
         this.id = id;
         this.dateOfVisit = dateOfVisit;
         this.description = description;
-        this.pet = pet;
+
     }
 
-    @Override
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -54,20 +54,63 @@ public class Visit implements Modifiable {
         this.description = description;
     }
 
+    // Update relationship between this Visit and a Pet
+    public void addPet(Pet pet) {
+
+        addPet(pet, true);
+    }
+
+    public void addPet(Pet pet, Boolean updateRelationship) {
+
+        this.pet = pet;
+        if (updateRelationship) {
+            pet.addVisit(this, false);
+        }
+    }
+
+    public void removePet(Pet pet) {
+
+        removePet(pet, true);
+    }
+
+    public void removePet(Pet pet, Boolean updateRelationship) {
+
+        this.pet = null;
+        if (updateRelationship) {
+            pet.removeVisit(this, false);
+        }
+
+    }
+
+    // Update relationship between this Visit and Vet
+    public void addVet(Vet vet) {
+
+        addVet(vet, true);
+    }
+
+    public void addVet(Vet vet, Boolean updateRelationship) {
+
+        this.vets.add(vet);
+        if (updateRelationship) {
+            vet.addVisit(this, false);
+        }
+    }
+
+    public void removeVet(Vet vet) {
+
+        removeVet(vet, true);
+    }
+
+    public void removeVet(Vet vet, Boolean updateRelationship) {
+
+        this.vets.remove(vet);
+        if(updateRelationship) {
+            vet.removeVisit(this, false);
+        }
+    }
+
     public Pet getPet() {
         return pet;
-    }
-
-    public void setPet(Pet pet) {
-        this.pet = pet;
-    }
-
-    public Vet getVet(Vet vet) {
-        return this.vets.get(vets.indexOf(vet));
-    }
-
-    public void addVet(Vet vet) {
-        this.vets.add(vet);
     }
 
     public List<Vet> getAllVets() {
@@ -93,8 +136,6 @@ public class Visit implements Modifiable {
         sb.append("id=").append(id);
         sb.append(", dateOfVisit=").append(dateOfVisit);
         sb.append(", description='").append(description).append('\'');
-        sb.append(", pet=").append(pet);
-        sb.append(", vets=").append(vets);
         sb.append('}');
         return sb.toString();
     }

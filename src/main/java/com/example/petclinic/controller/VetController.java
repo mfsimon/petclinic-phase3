@@ -22,7 +22,7 @@ public class VetController implements BasicController<Vet> {
         return this.vetService.add(vet);
     }
 
-    public Vet get(int id) {
+    public Vet get(Long id) {
 
         return this.vetService.get(id);
     }

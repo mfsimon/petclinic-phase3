@@ -9,7 +9,7 @@ import java.util.Objects;
  */
 public class Owner implements Modifiable {
 
-    private int id;
+    private Long id;
     private String name;
     private String address;
     private String city;
@@ -18,12 +18,13 @@ public class Owner implements Modifiable {
     // associations
     private List<Pet> pets;
 
+    public Owner(Long id) {
 
-    public Owner(int id) {
-        this.id = id;
+        this(id, null, null, null, null);
     }
 
-    public Owner(int id, String name, String address, String city, String phoneNumber) {
+    public Owner(Long id, String name, String address, String city, String phoneNumber) {
+
         this.id = id;
         this.name = name;
         this.address = address;
@@ -32,12 +33,11 @@ public class Owner implements Modifiable {
         this.pets = new ArrayList<>();
     }
 
-    @Override
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -73,15 +73,35 @@ public class Owner implements Modifiable {
         this.phoneNumber = phoneNumber;
     }
 
-    public Pet getPet(Pet pet) {
-        return this.pets.get(pets.indexOf(pet));
-    }
-
+    // Update the relationship between Pet and Owner when adding a Pet
     public void addPet(Pet pet) {
-        this.pets.add(pet);
+
+        addPet(pet, true);
     }
 
-    public List<Pet> getAllPets() {
+    public void addPet(Pet pet, Boolean updateRelationship) {
+
+        pets.add(pet);
+        if(updateRelationship) {
+            pet.addOwner(this, false);
+        }
+    }
+
+    // Update the relationship between Pet and Owner when removing a Pet
+    public void removePet(Pet pet) {
+
+        removePet(pet, true);
+    }
+
+    public void removePet(Pet pet, Boolean updateRelationship) {
+
+        pets.remove(pet);
+        if (updateRelationship) {
+            pet.removeOwner(this, false);
+        }
+    }
+
+    public List<Pet> getPets() {
         return this.pets;
     }
 
@@ -109,7 +129,6 @@ public class Owner implements Modifiable {
         sb.append(", address='").append(address).append('\'');
         sb.append(", city='").append(city).append('\'');
         sb.append(", phoneNumber='").append(phoneNumber).append('\'');
-        sb.append(", pets=").append(pets);
         sb.append('}');
         return sb.toString();
     }

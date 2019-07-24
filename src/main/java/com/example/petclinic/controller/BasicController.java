@@ -6,7 +6,7 @@ public interface BasicController<T> {
 
     T add(T t);
 
-    T get(int id);
+    T get(Long id);
 
     T modify(T t);
 

@@ -23,7 +23,7 @@ public class PetService implements BasicService<Pet> {
     }
 
     @Override
-    public Pet get(int id) {
+    public Pet get(Long id) {
 
         return petRepository.read(new Pet(id));
     }

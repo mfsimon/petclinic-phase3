@@ -23,7 +23,7 @@ public class OwnerController implements BasicController<Owner> {
     }
 
     @Override
-    public Owner get(int id) {
+    public Owner get(Long id) {
 
         return this.ownerService.get(id);
     }

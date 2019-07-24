@@ -23,7 +23,7 @@ public class VetService implements BasicService<Vet> {
     }
 
     @Override
-    public Vet get(int id) {
+    public Vet get(Long id) {
 
         return this.vetRepository.read(new Vet(id));
     }

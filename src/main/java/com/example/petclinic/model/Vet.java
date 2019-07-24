@@ -6,8 +6,7 @@ import java.util.Objects;
 
 public class Vet implements Modifiable {
 
-
-    private int id;
+    private Long id;
     private String name;
     private List<Speciality> specialities;
 
@@ -18,12 +17,12 @@ public class Vet implements Modifiable {
 
     }
 
-    public Vet(int id) {
+    public Vet(Long id) {
 
         this.id = id;
     }
 
-    public Vet(int id, String name, List<Speciality> specialities, List<Visit> visits) {
+    public Vet(Long id, String name, List<Speciality> specialities, List<Visit> visits) {
 
         this.id = id;
         this.name = name;
@@ -31,12 +30,11 @@ public class Vet implements Modifiable {
         this.visits = visits;
     }
 
-    @Override
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -54,6 +52,37 @@ public class Vet implements Modifiable {
 
     public void setSpecialities(List<Speciality> specialities) {
         this.specialities = specialities;
+    }
+
+    // Update relationship between this Vet and visits
+    public void addVisit(Visit visit) {
+
+        addVisit(visit, true);
+    }
+
+    public void addVisit(Visit visit, Boolean updateRelationship) {
+
+        this.visits.add(visit);
+        if(updateRelationship) {
+            visit.addVet(this, false);
+        }
+    }
+
+    public void removeVisit(Visit visit) {
+        removeVisit(visit, true);
+    }
+
+    public void removeVisit(Visit visit, Boolean updateRelationship) {
+
+        this.visits.remove(visit);
+        if(updateRelationship) {
+            visit.removeVet(this, false);
+        }
+    }
+
+    public List<Visit> getVisits() {
+
+        return this.visits;
     }
 
     @Override

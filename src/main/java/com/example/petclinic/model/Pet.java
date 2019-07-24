@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Pet implements Modifiable {
 
-    private int id;
+    private Long id;
     private String name;
     private Date birthDate;
     private PetType petType;
@@ -15,11 +15,12 @@ public class Pet implements Modifiable {
     private Owner owner;
     private List<Visit> visits;
 
-    public Pet(int id) {
-        this.id = id;
+    public Pet(Long id) {
+
+        this(id, null, null, null);
     }
 
-    public Pet(int id, String name, Date birthDate, PetType petType) {
+    public Pet(Long id, String name, Date birthDate, PetType petType) {
 
         this.id = id;
         this.name = name;
@@ -27,12 +28,11 @@ public class Pet implements Modifiable {
         this.petType = petType;
     }
 
-    @Override
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -60,23 +60,67 @@ public class Pet implements Modifiable {
         this.petType = petType;
     }
 
+    // Update the relationship between Owner and Pet when adding an Owner
+    public void addOwner(Owner owner) {
+
+        addOwner(owner, true);
+    }
+
+    public void addOwner(Owner owner, Boolean updateRelationship) {
+
+        this.owner = owner;
+        if (updateRelationship) {
+            owner.addPet(this, false);
+        }
+    }
+
+    // Update the relationship between Owner and Pet when removing an Owner
+    public void removeOwner(Owner owner) {
+
+        removeOwner(owner, true);
+    }
+
+    public void removeOwner(Owner owner, Boolean updateRelationship) {
+
+        this.owner = null;
+        if (updateRelationship) {
+            owner.removePet(this, false);
+        }
+    }
+
+    // Update the relationship between Visit and Pet when adding a Visit
+    public void addVisit(Visit visit) {
+
+        addVisit(visit, true);
+    }
+
+    public void addVisit(Visit visit, Boolean updateRelationship) {
+
+        visits.add(visit);
+        if (updateRelationship) {
+            visit.addPet(this, false);
+        }
+    }
+
+    // Update the relationship between Visit and Pet when removing a Visit
+    public void removeVisit(Visit visit) {
+
+        removeVisit(visit, true);
+    }
+
+    public void removeVisit(Visit visit, Boolean updateRelationship) {
+
+        visits.remove(visit);
+        if (updateRelationship) {
+            visit.removePet(this, false);
+        }
+    }
+
     public Owner getOwner() {
         return owner;
     }
 
-    public void setOwner(Owner owner) {
-        this.owner = owner;
-    }
-
-    public Visit getVisit(Visit visit) {
-        return visits.get(visits.indexOf(visit));
-    }
-
-    public void addVisit(Visit visit) {
-        visits.add(visit);
-    }
-
-    public List<Visit> getAllVisits() {
+    public List<Visit> getVisits() {
         return this.visits;
     }
 
@@ -101,8 +145,6 @@ public class Pet implements Modifiable {
         sb.append(", name='").append(name).append('\'');
         sb.append(", birthDate=").append(birthDate);
         sb.append(", petType=").append(petType);
-        sb.append(", owner=").append(owner);
-        sb.append(", visits=").append(visits);
         sb.append('}');
         return sb.toString();
     }
