@@ -6,15 +6,18 @@ We're going to use an in memory database to start with (H2), then switch to MySQ
 
 [PetClinic Reference Application](http://petclinic.cognizantacademy.com)
 
+#### Objectives
+###### Primary Objectives
+
+###### Bonus Objectives
+* Implement an inner builder pattern for each of your model classes by completing bonus activity 1.
+* Implement a MySQL datasource by completing bonus activity 2.
+* Implement integration tests for each of your controllers by completing bonus activity 3.
+
 #### What You Are Given
 
-* Code for the controllers - `BasicController`, `OwnerController`,`PetController`, `VisitController`, `VetController`
-* Code for the services - `BasicService`, `OwnerService`, `PetService`, `VisitService`, `VetService`
-* Code for the repositories - `OwnerRepository`, `PetRepository`, `VisitRepository`, `VetRepository`
-* Code for the models - `Owner`, `Pet`, `PetType`, `Visit`, `Vet` and `Speciality`
-* A database class - `FakeDatabase`
-* Supporting interfaces for the `FakeDatabase` (`Modifiable` and `CrudRepository`)
-* A driver class - `PetClinicDriver`
+* Completed Phase 2 code.
+* Completed code for Owner sequence.
 
 #### What You Need To Complete
 Complete the following steps to add a real database.  
@@ -81,7 +84,8 @@ The `applications.properties` file has been updated:
 * Generate a builder by navigating to the class you want to add the builder to and navigate to Code -> Generate.
 * Select Builder.
 * Select `Inner Builder` and `Single Field` then select OK.
-* Add a public static method called `builder()` just above the new inner class.  For the `Owner` class, the return type for the new method would be `OwnerBuilder`.
+* Add a public static method called `builder()` just above the new inner class.  
+* Use the builder class in thw Owner class as a pattern to complete this activity for the other 3 models.
 * Use the new builder in your driver to create some new objects.
 
 ###### Bonus Activity 2 (easy) 
@@ -90,7 +94,7 @@ The `applications.properties` file has been updated:
 * In the properties file, uncomment the MySQL settings.
 * In the build file (pom.xml), uncomment the dependency for the MySQL driver library (mysql-connector-java).
 
-###### Bonus Activity 2 (hard)
+###### Bonus Activity 3 (hard)
 * This assumes you have the H2 database working.
 * Implement integration tests for the `OwnerController`, `PetController`, `VisitController` and `VetController` classes.
 * Uncomment each of the tests in the `OwnerController` and make sure they run.  Once they do, use them as a pattern to implement tests for the other 3 classes.

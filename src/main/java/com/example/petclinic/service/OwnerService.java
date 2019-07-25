@@ -5,6 +5,7 @@ import com.example.petclinic.repository.OwnerRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OwnerService implements BasicService<Owner> {
@@ -19,31 +20,38 @@ public class OwnerService implements BasicService<Owner> {
     @Override
     public Owner add(Owner owner) {
 
-        return this.ownerRepository.create(owner);
+        return this.ownerRepository.save(owner);
     }
 
     @Override
     public Owner get(Long id) {
 
-        return this.ownerRepository.read(new Owner(id));
+        Optional optional = this.ownerRepository.findById(id);
+
+        Owner result = null;
+        if (optional.isPresent()) {
+            result = (Owner) optional.get();
+        }
+        return result;
     }
 
     @Override
     public Owner modify(Owner owner) {
 
-        return this.ownerRepository.update(owner);
+        return this.ownerRepository.save(owner);
     }
 
     @Override
     public boolean delete(Owner owner) {
 
-        return this.ownerRepository.delete(owner);
+        this.ownerRepository.delete(owner);
+        return true;
     }
 
     @Override
     public List<Owner> getAll() {
 
-        return ownerRepository.getAll();
+        return (List<Owner>) ownerRepository.findAll();
     }
 
 

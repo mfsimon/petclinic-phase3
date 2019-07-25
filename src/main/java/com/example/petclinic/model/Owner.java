@@ -1,5 +1,6 @@
 package com.example.petclinic.model;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -7,16 +8,29 @@ import java.util.Objects;
 /**
  * This class represents a pet owner.
  */
-public class Owner implements Modifiable {
+@Entity(name = "Owner")
+@Table(name = "owner")
+public class Owner {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private String name;
     private String address;
     private String city;
     private String phoneNumber;
 
-    // associations
-    private List<Pet> pets;
+    @OneToMany(
+            mappedBy = "owner",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY)
+    private List<Pet> pets = new ArrayList<>();
+
+    public Owner() {
+
+    }
 
     public Owner(Long id) {
 
@@ -132,4 +146,53 @@ public class Owner implements Modifiable {
         sb.append('}');
         return sb.toString();
     }
+
+    // Builder pattern using static builder
+    public static OwnerBuilder builder() {
+        return new OwnerBuilder();
+    }
+
+    public static final class OwnerBuilder {
+
+        private Owner owner;
+
+        private OwnerBuilder() {
+            owner = new Owner();
+        }
+
+        public OwnerBuilder withId(Long id) {
+            owner.setId(id);
+            return this;
+        }
+
+        public OwnerBuilder withName(String name) {
+            owner.setName(name);
+            return this;
+        }
+
+        public OwnerBuilder withAddress(String address) {
+            owner.setAddress(address);
+            return this;
+        }
+
+        public OwnerBuilder withCity(String city) {
+            owner.setCity(city);
+            return this;
+        }
+
+        public OwnerBuilder withPhoneNumber(String phoneNumber) {
+            owner.setPhoneNumber(phoneNumber);
+            return this;
+        }
+
+        public OwnerBuilder withPet(Pet pet) {
+            owner.addPet(pet);
+            return this;
+        }
+
+        public Owner build() {
+            return owner;
+        }
+    }
+
 }
