@@ -8,6 +8,7 @@ We're going to use an in memory database to start with (H2), then switch to MySQ
 
 #### Objectives
 ###### Primary Objectives
+* Implement an H2 database by completing the instructions below in the `Database Conversion` section.
 
 ###### Bonus Objectives
 * Implement an inner builder pattern for each of your model classes by completing bonus activity 1.
@@ -20,6 +21,8 @@ We're going to use an in memory database to start with (H2), then switch to MySQ
 * Completed code for Owner sequence.
 
 #### What You Need To Complete
+
+###### Database Conversion Setup
 Complete the following steps to add a real database.  
 
 * Delete the following classes from your code completely:
@@ -34,15 +37,20 @@ From the model package:
 
 Leave all other classes.
 
+* Modify your models and remove any references to the `Modifiable` interface.
+
+###### JPA Implementation
+
 The relationships between objects is managed in the models.  Most of the changes happen there:
 
-* Change the type of the id field in each of your models to use a `Long`.
 * Modify your models to use the proper JPA annotations.
-* Use the resources listed in the `HELP.md` file as a guide.
+* Use the Owner class and the resources listed in the `HELP.md` file as a guide.
 * Implement a One-To-Many relationship between `Owner` and `Pet`.
 * Implement a One-To-Many relationship between `Pet` and `Visit`.
 * Implement a Many-To-Many relationship between `Visit` and `Vet`.
 * Use the UML design as a guide.
+
+###### JPA Repositories
 
 The repositories need to be modified as well:
 
@@ -52,6 +60,8 @@ The repositories need to be modified as well:
 * Have each repository extend the `CrudRepository` from the JPA library.
 * Be sure to set the proper generic type for the `CrudRepository`.
 * `CrudRepository<Owner, Long>` is an example.  `Owner` is the class you'll be accessing in the database and `Long` is the type of the id field.
+
+###### Application.properties
 
 The `applications.properties` file has been updated:
 
@@ -85,7 +95,7 @@ The `applications.properties` file has been updated:
 * Select Builder.
 * Select `Inner Builder` and `Single Field` then select OK.
 * Add a public static method called `builder()` just above the new inner class.  
-* Use the builder class in thw Owner class as a pattern to complete this activity for the other 3 models.
+* Use the builder class in the Owner class as a pattern to complete this activity for the other 3 models.
 * Use the new builder in your driver to create some new objects.
 
 ###### Bonus Activity 2 (easy) 
