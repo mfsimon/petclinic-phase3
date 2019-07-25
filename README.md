@@ -8,11 +8,11 @@ We're going to use an in memory database to start with (H2), then switch to MySQ
 
 #### Objectives
 ###### Primary Objectives
-* Implement an H2 database by completing the instructions below in the `Database Conversion` section.
+* Implement an H2 database by completing the instructions below in the `What You Need To Complete` section.
 
 ###### Bonus Objectives
 * Implement an inner builder pattern for each of your model classes by completing bonus activity 1.
-* Implement a MySQL datasource by completing bonus activity 2.
+* Convert to a MySQL datasource by completing bonus activity 2.
 * Implement integration tests for each of your controllers by completing bonus activity 3.
 
 #### What You Are Given
@@ -37,7 +37,7 @@ From the model package:
 
 Leave all other classes.
 
-* Modify your models and remove any references to the `Modifiable` interface.
+* Modify your models and remove any references to the `Modifiable` interface, including the `@Override` annotation from the `getId()` method.
 
 ###### JPA Implementation
 
