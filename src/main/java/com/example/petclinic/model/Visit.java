@@ -113,7 +113,7 @@ public class Visit implements Modifiable {
         return pet;
     }
 
-    public List<Vet> getAllVets() {
+    public List<Vet> getVets() {
         return this.vets;
     }
 
