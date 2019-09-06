@@ -1,18 +1,33 @@
 package com.example.petclinic.model;
 
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class Visit implements Modifiable {
+@Entity(name = "Visit")
+@Table(name = "visit")
+public class Visit {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Date dateOfVisit;
     private String description;
 
     // associations
+
+    @ManyToOne
+    @JoinColumn(name = "pet_id")
     private Pet pet;
-    private List<Vet> vets;
+
+    @ManyToMany
+    @JoinTable(
+            name = "visit_vet",
+            joinColumns = @JoinColumn(name = "visit_id"),
+            inverseJoinColumns = @JoinColumn(name = "vet_id"))
+    private List<Vet> vets = new ArrayList<>();
 
     protected Visit() {
 
@@ -22,9 +37,9 @@ public class Visit implements Modifiable {
         this.id = id;
     }
 
-    public Visit(Long id, Date dateOfVisit, String description) {
+    public Visit(Date dateOfVisit, String description) {
 
-        this.id = id;
+//        this.id = id;
         this.dateOfVisit = dateOfVisit;
         this.description = description;
 
@@ -52,6 +67,10 @@ public class Visit implements Modifiable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Pet getPets() {
+        return this.pet;
     }
 
     // Update relationship between this Visit and a Pet
@@ -134,9 +153,45 @@ public class Visit implements Modifiable {
     public String toString() {
         final StringBuilder sb = new StringBuilder("Visit{");
         sb.append("id=").append(id);
-        sb.append(", dateOfVisit=").append(dateOfVisit);
-        sb.append(", description='").append(description).append('\'');
+//        sb.append(", dateOfVisit=").append(dateOfVisit);
+//        sb.append(", description='").append(description).append('\'');
         sb.append('}');
         return sb.toString();
+    }
+
+    // Builder pattern using static builder
+    public static VisitBuilder builder() {
+        return new VisitBuilder();
+    }
+
+    public static final class VisitBuilder {
+        private Visit visit;
+
+        private VisitBuilder() {
+            visit = new Visit();
+        }
+
+        public static VisitBuilder aVisit() {
+            return new VisitBuilder();
+        }
+
+        public VisitBuilder withId(Long id) {
+            visit.setId(id);
+            return this;
+        }
+
+        public VisitBuilder withDateOfVisit(Date dateOfVisit) {
+            visit.setDateOfVisit(dateOfVisit);
+            return this;
+        }
+
+        public VisitBuilder withDescription(String description) {
+            visit.setDescription(description);
+            return this;
+        }
+
+        public Visit build() {
+            return visit;
+        }
     }
 }

@@ -1,28 +1,43 @@
 package com.example.petclinic.model;
 
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class Pet implements Modifiable {
+@Entity(name = "Pet")
+@Table(name = "pet")
+public class Pet {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private Date birthDate;
     private PetType petType;
 
     // associations
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
     private Owner owner;
-    private List<Visit> visits;
 
-    public Pet(Long id) {
+    @OneToMany(
+            mappedBy = "pet",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY)
+    private List<Visit> visits = new ArrayList<>();
 
-        this(id, null, null, null);
+    protected Pet() {
+
     }
 
-    public Pet(Long id, String name, Date birthDate, PetType petType) {
+    public Pet(Long id) { this.id = id; }
 
-        this.id = id;
+    public Pet(String name, Date birthDate, PetType petType) {
+
+//        this.id = id;
         this.name = name;
         this.birthDate = birthDate;
         this.petType = petType;
@@ -147,5 +162,46 @@ public class Pet implements Modifiable {
         sb.append(", petType=").append(petType);
         sb.append('}');
         return sb.toString();
+    }
+
+    // Builder pattern using static builder
+    public static PetBuilder builder() {
+        return new PetBuilder();
+    }
+
+    public static final class PetBuilder {
+        private Pet pet;
+
+        private PetBuilder() {
+            pet = new Pet();
+        }
+
+        public static PetBuilder aPet() {
+            return new PetBuilder();
+        }
+
+        public PetBuilder withId(Long id) {
+            pet.setId(id);
+            return this;
+        }
+
+        public PetBuilder withName(String name) {
+            pet.setName(name);
+            return this;
+        }
+
+        public PetBuilder withBirthDate(Date birthDate) {
+            pet.setBirthDate(birthDate);
+            return this;
+        }
+
+        public PetBuilder withPetType(PetType petType) {
+            pet.setPetType(petType);
+            return this;
+        }
+
+        public Pet build() {
+            return pet;
+        }
     }
 }

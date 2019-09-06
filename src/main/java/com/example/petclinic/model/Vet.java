@@ -1,17 +1,29 @@
 package com.example.petclinic.model;
 
-
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Vet implements Modifiable {
+@Entity(name = "Vet")
+@Table(name = "vet")
+public class Vet {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+
+    @ElementCollection(targetClass = Speciality.class)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name="vet_speciality")
+    @Column(name="speciality")
     private List<Speciality> specialities;
 
     // associations
-    private List<Visit> visits;
+
+    @ManyToMany(mappedBy = "vets")
+    private List<Visit> visits = new ArrayList<>();
 
     protected Vet() {
 
@@ -22,9 +34,9 @@ public class Vet implements Modifiable {
         this.id = id;
     }
 
-    public Vet(Long id, String name, List<Speciality> specialities, List<Visit> visits) {
+    public Vet(String name, List<Speciality> specialities, List<Visit> visits) {
 
-        this.id = id;
+//        this.id = id;
         this.name = name;
         this.specialities = specialities;
         this.visits = visits;
@@ -102,10 +114,46 @@ public class Vet implements Modifiable {
     public String toString() {
         final StringBuilder sb = new StringBuilder("Vet{");
         sb.append("id=").append(id);
-        sb.append(", name='").append(name).append('\'');
-        sb.append(", specialities=").append(specialities);
-        sb.append(", visits=").append(visits);
+//        sb.append(", name='").append(name).append('\'');
+//        sb.append(", specialities=").append(specialities);
+//        sb.append(", visits=").append(visits);
         sb.append('}');
         return sb.toString();
+    }
+
+    // Builder pattern using static builder
+    public static VetBuilder builder() {
+        return new VetBuilder();
+    }
+
+    public static final class VetBuilder {
+        private Vet vet;
+
+        private VetBuilder() {
+            vet = new Vet();
+        }
+
+        public static VetBuilder aVet() {
+            return new VetBuilder();
+        }
+
+        public VetBuilder withId(Long id) {
+            vet.setId(id);
+            return this;
+        }
+
+        public VetBuilder withName(String name) {
+            vet.setName(name);
+            return this;
+        }
+
+        public VetBuilder withSpecialities(List<Speciality> specialities) {
+            vet.setSpecialities(specialities);
+            return this;
+        }
+
+        public Vet build() {
+            return vet;
+        }
     }
 }

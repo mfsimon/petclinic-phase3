@@ -123,4 +123,23 @@ public class OwnerControllerTest implements ApplicationContextAware {
         */
     }
 
+    @Test
+    public void add1() {
+    }
+
+    @Test
+    public void get() {
+    }
+
+    @Test
+    public void modify1() {
+    }
+
+    @Test
+    public void delete1() {
+    }
+
+    @Test
+    public void getAll1() {
+    }
 }

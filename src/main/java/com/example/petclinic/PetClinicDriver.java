@@ -32,7 +32,7 @@ public class PetClinicDriver implements ExitCodeGenerator {
         testApp();
 
         // part of exit code implementation
-        System.exit(SpringApplication.exit(context));
+//        System.exit(SpringApplication.exit(context));
     }
 
     private static void testApp() {
@@ -49,10 +49,10 @@ public class PetClinicDriver implements ExitCodeGenerator {
         // ***** Owner *****
 
         // create our owners
-        Owner owner1 = new Owner(1L, "Homer Simpson", "742 Evergreen Terrace", "Springfield", "9395550113");
-        Owner owner2 = new Owner(2L, "Marge Simpson", "742 Evergreen Terrace", "Springfield", "9395550113");
-        Owner owner3 = new Owner(3L, "Lisa Simpson", "742 Evergreen Terrace", "Springfield", "9395550113");
-        Owner owner4 = new Owner(4L, "Bart Simpson", "742 Evergreen Terrace", "Springfield", "9395550113");
+        Owner owner1 = Owner.builder().withName("Homer Simpson").withAddress("742 Evergreen Terrace").withCity("Springfield").withPhoneNumber("9395550113").build();
+        Owner owner2 = Owner.builder().withName("Marge Simpson").withAddress("742 Evergreen Terrace").withCity("Springfield").withPhoneNumber("9395550113").build();
+        Owner owner3 = Owner.builder().withName("Lisa Simpson").withAddress("742 Evergreen Terrace").withCity("Springfield").withPhoneNumber("9395550113").build();
+        Owner owner4 = Owner.builder().withName("Bart Simpson").withAddress("742 Evergreen Terrace").withCity("Springfield").withPhoneNumber("9395550113").build();
 
         // save owners to database
         ownerController.add(owner1);
@@ -66,16 +66,17 @@ public class PetClinicDriver implements ExitCodeGenerator {
         // ***** Pet *****
 
         // create some pets and add them to an existing owner
-        Pet pet1 = new Pet(1L, "Godzilla", new Date(), PetType.LIZARD);
-        Pet pet2 = new Pet(2L, "Santa's Little Helper", new Date(), PetType.DOG);
+        Pet pet1 = Pet.builder().withName("Godzilla").withBirthDate(new Date()).withPetType(PetType.LIZARD).build();
+        Pet pet2 = Pet.builder().withName("Santa's Little Helper").withBirthDate(new Date()).withPetType(PetType.DOG).build();
+
         owner4.addPet(pet1);
         owner4.addPet(pet2);
 
         // display the owner info again
         display(ownerController.getAll());
 
-        Pet pet3 = new Pet(1L, "Strangles", new Date(), PetType.SNAKE);
-        Pet pet4 = new Pet(2L, "Stompy", new Date(), PetType.ELEPHANT);
+        Pet pet3 = Pet.builder().withName("Strangles").withBirthDate(new Date()).withPetType(PetType.SNAKE).build();
+        Pet pet4 = Pet.builder().withName("Stompy").withBirthDate(new Date()).withPetType(PetType.ELEPHANT).build();
 
         petController.add(pet1);
         petController.add(pet2);
@@ -85,9 +86,11 @@ public class PetClinicDriver implements ExitCodeGenerator {
         display(petController.getAll());
 
         // ***** Visit *****
+        Visit visit1 = Visit.builder().withDateOfVisit(new Date()).withDescription("description").build();
+        Visit visit2 = Visit.builder().withDateOfVisit(new Date()).withDescription("description").build();
 
-        Visit visit1 = new Visit(1L, new Date(), "description");
-        Visit visit2 = new Visit(2L, new Date(), "description");
+        visit1.addPet(pet1);
+        visit2.addPet(pet2);
 
         visitController.add(visit1);
         visitController.add(visit2);
@@ -105,12 +108,18 @@ public class PetClinicDriver implements ExitCodeGenerator {
             add(visit2);
         }};
 
-        Vet vet1 = new Vet(1L, "Veterinarian", specialities, visits);
+        Vet vet1 = Vet.builder().withName("Veterinarian").withSpecialities(specialities).build();
+        // vet1 = new Vet("Veterinarian", specialities, visits);
+        visit1.addVet(vet1);
+        visit2.addVet(vet1);
 
         vetController.add(vet1);
+        vetController.add(vet1);
+
+        visitController.modify(visit1);
+        visitController.modify(visit2);
 
         display(vetController.getAll());
-
 
     }
 
